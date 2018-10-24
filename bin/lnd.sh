@@ -6,14 +6,14 @@ ARG=$1
 
 function start() {
     waitforblock
-    docker run --rm --name lightning --network container:bitcoind_mainnet \
-        -v /scratch/bitcoin/mainnet/bitcoind:/root/.bitcoin -v \
-        /scratch/bitcoin/mainnet/clightning:/root/.lightning \
-        --entrypoint /usr/bin/lightningd ${LNDIMAGE} --network=bitcoin --log-level=debug
+    docker run --rm --name ${LNDNAME} --network container:${BTCNAME} -d \
+        -v /scratch/bitcoin/mainnet/bitcoind:/root/.bitcoin \
+        -v /scratch/bitcoin/mainnet/clightning:/root/.lightning \
+        ${LNDIMAGE} 
 }
 
 function stop() {
-    docker run --network container:lightning ${LNDIMAGE} lightning-cli stop
+    docker exec ${LNDNAME} lightning-cli stop
 }
 
 function restart() {
@@ -21,7 +21,7 @@ function restart() {
 }
 
 function status() {
-    docker ps -f name=lightning
+    docker ps -f name=${LNDNAME}
 }
 
 case ${ARG} in

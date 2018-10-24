@@ -1,23 +1,24 @@
 #!/bin/bash
 
+cd /$USER/lightning-node-master/bin
 source $(pwd)/init.sh 
 
 ARG=$1
 
 function start() {
-    docker run --rm --name bitcoind_mainnet -d \
-    -v ${BTCVOL}:/data \
-    -p 8333:8333 \
-    -p 8332:8332 \
-    -p 9735:9735 \
-    -p 18332:18332 \
-    -p 18333:18333 \
-    ${BTCIMAGE}
+    docker run --rm --name ${BTCNAME} -d \
+        -v ${BTCVOL}:/data \
+        -p 8333:8333 \
+        -p 127.0.0.1:8332:8332 \
+        -p 9735:9735 \
+        -p 18332:18332 \
+        -p 18333:18333 \
+        ${BTCIMAGE}
 }
 
 function stop() {
-    docker run --network container:bitcoind_mainnet lnd1/bitcoind:latest bitcoin-cli stop
-    # docker stop bitcoind_mainnet
+    # docker exec-it  bitcoind_mainnet bitcoin-cli stop
+    docker stop ${BTCNAME}
 }
 
 function restart() {
@@ -25,7 +26,7 @@ function restart() {
 }
 
 function status() {
-    docker ps -f name=bitcoind_mainnet
+    docker ps -f name=${BTCNAME}
 }
 
 case ${ARG} in
