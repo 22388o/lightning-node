@@ -5,22 +5,27 @@
 
 # install required packages
 apt-get update
-apt-get -y install docker.io python3 jq vim unzip git
-
-# setup s3cmd
-# wget https://github.com/s3tools/s3cmd/archive/master.zip
-# unzip master.zip
-# cd s3cmd-master
-# python3 setup.py install
+apt-get -y install \
+    docker.io \
+    python3 \
+    jq \
+    vim \
+    unzip \
+    git && \
+    apt-get clean all
 
 # get lightning stack files
-git clone https://github.com/jrosco/lightning-node.git
-cd lightning-node
+git clone https://github.com/jrosco/lightning-node.git /opt/lightning-node
+cd /opt/lightning-node && source bin/init.sh
 
-# setup lightning app
-# git clone https://github.com/dougvk/lightning-node.git
-# cd lightning-node/
-# docker build . -t lnd1/bitcoind
+# mount btcd and lnd data volume (create vol in sf region)
+BTCDATADIR=/scratch/bitcoin/mainnet/
+mkdir -p ${BTCDATADIR}
+echo "/dev/disk/by-id/scsi-0DO_Volume_volume-sfo2-01 ${BTCDATADIR} ext4 defaults,nofail,discard 0 0" | sudo tee -a /etc/fstab
+mount -a
+
+# setup other files
+cp /opt/lightning-node/conf/bash_aliases ~/.bash_aliases
 
 # get a list of lnd peers
 # lnd-cli listnodes| grep 'nodeid\|\"address\":\|port' | awk {'print $2'} | cut -d\" -f 2

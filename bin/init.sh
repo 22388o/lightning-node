@@ -1,19 +1,22 @@
-BTCVOL='/scratch/bitcoin/mainnet/bitcoind'
-DEVICE=/dev/sda
+RUNAS='bitcoin'
+MNTVOL='/scratch/bitcoin/mainnet'
+DEVICE='/dev/sda'
 BTCIMAGE='jr0sco/btcd:latest'
 BTCNAME='bitcoind'
-LNDVOL='/scratch/bitcoin/mainnet/clightning/'
 LNDIMAGE='jr0sco/lnd:latest'
-LNDNAME='lightning'
+LNDNAME='clightning'
+APPDIR='/opt/lightning-node'
 
-mkdir -p ${BTCVOL}
-mkdir -p ${LNDVOL}
+mkdir -p ${MNTVOL}/${LNDNAME}
+mkdir -p ${MNTVOL}/${BTCNAME}
+
+mountpoint ${MNTVOL} || exit
 
 function waitforblock() {
     while true; do
-        LOCALBLK=$(docker exec -it ${BTCNAME} bitcoin-cli getblockchaininfo|grep blocks|cut -d: -f2|cut -d, -f1)
+        LOCALBLK=$(docker exec -it ${BTCNAME} su ${RUNAS} -c "bitcoin-cli getblockchaininfo|grep blocks|cut -d: -f2|cut -d, -f1 | tr -dc '[:alnum:]\n\r'")
         CURRENTBLK=$(curl -s https://blockchain.info/q/getblockcount)
-        test -z ${LOCALBLK} && LOCALBLK=0
+        # test -z ${LOCALBLK} && LOCALBLK=0
         if [ ${LOCALBLK} == ${CURRENTBLK} ]; then
             echo "blocks synced ${LOCALBLK}/${CURRENTBLK}"
             break;

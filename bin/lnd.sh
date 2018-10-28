@@ -1,6 +1,5 @@
 #!/bin/bash
-
-source $(pwd)/init.sh 
+source /opt/lightning-node/bin/init.sh #TODO: fix this so the dir is set as a var
 
 ARG=$1
 
@@ -8,7 +7,7 @@ function start() {
     waitforblock
     docker run --rm --name ${LNDNAME} --network container:${BTCNAME} -d \
         -v /scratch/bitcoin/mainnet/bitcoind:/root/.bitcoin \
-        -v /scratch/bitcoin/mainnet/clightning:/root/.lightning \
+        -v ${MNTVOL}/${LNDNAME}:/root/.lightning \
         ${LNDIMAGE} 
 }
 

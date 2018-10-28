@@ -1,13 +1,12 @@
 #!/bin/bash
 
-cd /$USER/lightning-node-master/bin
-source $(pwd)/init.sh 
+source /opt/lightning-node/bin/init.sh #TODO: fix this so the dir is set as a var
 
 ARG=$1
 
 function start() {
     docker run --rm --name ${BTCNAME} -d \
-        -v ${BTCVOL}:/data \
+        -v ${MNTVOL}/${BTCNAME}:/data \
         -p 8333:8333 \
         -p 127.0.0.1:8332:8332 \
         -p 9735:9735 \
