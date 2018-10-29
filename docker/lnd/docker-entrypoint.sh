@@ -52,10 +52,11 @@ fi
 exec lnd \
     --noseedbackup \
     --logdir="/data" \
+    --datadir="/data" \
     "--$CHAIN.active" \
     "--$CHAIN.$NETWORK" \
     "--$CHAIN.node"="btcd" \
-    "--$BACKEND.rpccert"="/rpc/rpc.cert" \
+    "--$BACKEND.rpccert"="/rpc.cert" \
     "--$BACKEND.rpchost"="blockchain" \
     "--$BACKEND.rpcuser"="$RPCUSER" \
     "--$BACKEND.rpcpass"="$RPCPASS" \
