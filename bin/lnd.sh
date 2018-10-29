@@ -1,4 +1,5 @@
 #!/bin/bash
+
 source /opt/lightning-node/bin/init.sh #TODO: fix this so the dir is set as a var
 
 ARG=$1
@@ -12,7 +13,7 @@ function start() {
 }
 
 function stop() {
-    docker exec ${LNDNAME} lightning-cli stop
+    docker stop ${LNDNAME}
 }
 
 function restart() {
