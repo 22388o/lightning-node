@@ -1,11 +1,11 @@
-RUNAS='bitcoin'
-MNTVOL='/scratch/bitcoin/mainnet'
-DEVICE='/dev/sda'
-BTCIMAGE='jr0sco/btcd:latest'
-BTCNAME='bitcoind'
-LNDIMAGE='jr0sco/lnd:latest'
-LNDNAME='clightning'
-APPDIR='/opt/lightning-node'
+RUNAS=${RUNAS:=bitcoin}
+MNTVOL=${MNTVOL:='/scratch/bitcoin/mainnet'}
+DEVICE=${DEVICE:='/dev/sda'}
+BTCIMAGE=${BTCIMAGE:='jr0sco/btcd:latest'}
+BTCNAME=${BTCNAME:=bitcoind}
+LNDIMAGE=${LNDIMAGE:='jr0sco/lnd:latest'}
+LNDNAME=${LNDNAME:=lightning}
+APPDIR=${APPDIR:='/opt/lightning-node'}
 
 mkdir -p ${MNTVOL}/${LNDNAME}
 mkdir -p ${MNTVOL}/${BTCNAME}
