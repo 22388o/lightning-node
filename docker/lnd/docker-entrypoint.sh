@@ -26,39 +26,40 @@ set_default() {
     VARIABLE="$1"
     DEFAULT="$2"
 
-    if [[ -z "$VARIABLE" || "$VARIABLE" == "$BLANK_STRING" ]]; then
+    if [[ -z "${VARIABLE}" || "${VARIABLE}" == "${BLANK_STRING}" ]]; then
 
-        if [ -z "$DEFAULT" ]; then
+        if [ -z "${DEFAULT}" ]; then
             error "You should specify default variable"
         else
-            VARIABLE="$DEFAULT"
+            VARIABLE="${DEFAULT}"
         fi
     fi
 
-   return "$VARIABLE"
+   return "${VARIABLE}"
 }
 
 # Set default variables if needed.
-RPCUSER=$(set_default "$RPCUSER" "bitcoin")
-RPCPASS=$(set_default "$RPCPASS" "password")
-DEBUG=$(set_default "$DEBUG" "debug")
-NETWORK=$(set_default "$NETWORK" "mainnet")
-CHAIN=$(set_default "$CHAIN" "bitcoin")
-BACKEND="btcd"
-if [[ "$CHAIN" == "litecoin" ]]; then
-    BACKEND="ltcd"
-fi
+RPCUSER=$(set_default "${RPCUSER}" "bitcoin")
+RPCPASS=$(set_default "${RPCPASS}" "password")
+DEBUG=$(set_default "${DEBUG}" "debug")
+NETWORK=$(set_default "${NETWORK}" "mainnet")
+CHAIN=$(set_default "${CHAIN}" "bitcoin")
+BACKEND=$(set_default "${BACKEND}" "btcd")
+# BACKEND="bitcoind"
+# if [[ "${CHAIN}" == "litecoin" ]]; then
+#     BACKEND="ltcd"
+# fi
 
 exec lnd \
     --noseedbackup \
-    --logdir="/data" \
-    --datadir="/data" \
-    "--$CHAIN.active" \
-    "--$CHAIN.$NETWORK" \
-    "--$CHAIN.node"="btcd" \
-    "--$BACKEND.rpccert"="/rpc.cert" \
-    "--$BACKEND.rpchost"="blockchain" \
-    "--$BACKEND.rpcuser"="$RPCUSER" \
-    "--$BACKEND.rpcpass"="$RPCPASS" \
-    --debuglevel="$DEBUG" \
-    "$@"
+    --logdir=/data \
+    --datadir=/data \
+    --${CHAIN}.active \
+    --${CHAIN}.${NETWORK} \
+    --${CHAIN}.node=${BACKEND} \
+    --${BACKEND}.rpccert=/rpc.cert \
+    --${BACKEND}.rpchost=blockchain \
+    --${BACKEND}.rpcuser=${RPCUSER} \
+    --${BACKEND}.rpcpass=${RPCPASS} \
+    --debuglevel=${DEBUG} \
+    $@
