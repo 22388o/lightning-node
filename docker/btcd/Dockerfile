@@ -38,5 +38,5 @@ COPY docker-entrypoint.sh /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-EXPOSE 8332 8333 18332 18333
+EXPOSE 28332 28333
 CMD ["bitcoind"]
