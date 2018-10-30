@@ -1,17 +1,15 @@
 #!/bin/bash
 
-source /opt/lightning-node/bin/init.sh #TODO: fix this so the dir is set as a var
+source ${pwd/}init.sh #TODO: fix this so the dir is set as a var
 
 ARG=$1
 
 function start() {
     docker run --rm --name ${BTCNAME} -d \
-        -v ${MNTVOL}/${BTCNAME}:/data \
-        -p 8333:8333 \
-        -p 127.0.0.1:8332:8332 \
-        -p 9735:9735 \
-        -p 18332:18332 \
-        -p 18333:18333 \
+        -v ${MNTVOL}/${BTCNAME}:/home/$RUNAS/.bitcoin \
+        -p 127.0.0.1:9735:9735 \
+        -p 127.0.0.1:28332:28332 \
+        -p 127.0.0.1:28333:28333 \
         ${BTCIMAGE}
 }
 
@@ -29,7 +27,7 @@ function status() {
 }
 
 case ${ARG} in
-    start)   
+    start)
         start
         ;;
     stop)
@@ -40,6 +38,6 @@ case ${ARG} in
         ;;
     status)
         status
-        ;;           
-    *)              
-esac 
+        ;;
+    *)
+esac

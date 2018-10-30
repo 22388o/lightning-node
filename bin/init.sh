@@ -10,7 +10,7 @@ APPDIR=${APPDIR:='/opt/lightning-node'}
 mkdir -p ${MNTVOL}/${LNDNAME}
 mkdir -p ${MNTVOL}/${BTCNAME}
 
-mountpoint ${MNTVOL} || exit
+# mountpoint ${MNTVOL} || exit
 
 function waitforblock() {
     while true; do

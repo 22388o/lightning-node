@@ -1,15 +1,15 @@
 #!/bin/bash
 
-source /opt/lightning-node/bin/init.sh #TODO: fix this so the dir is set as a var
+source ${pwd/}init.sh #TODO: fix this so the dir is set as a var
 
 ARG=$1
 
 function start() {
-    waitforblock
-    docker run --rm --name ${LNDNAME} --network container:${BTCNAME} -d \
-        -v /scratch/bitcoin/mainnet/bitcoind:/root/.bitcoin \
-        -v ${MNTVOL}/${LNDNAME}:/root/.lightning \
-        ${LNDIMAGE} 
+    #waitforblock
+    docker run --rm --name ${LNDNAME} --network container:${BTCNAME} \
+        -v ${MNTVOL}/${BTCNAME}:/home/$RUNAS/.bitcoin \
+        -v ${MNTVOL}/${LNDNAME}:/home/$RUNAS/.lnd \
+        ${LNDIMAGE}
 }
 
 function stop() {
@@ -25,7 +25,7 @@ function status() {
 }
 
 case ${ARG} in
-    start)   
+    start)
         start
         ;;
     stop)
@@ -36,6 +36,6 @@ case ${ARG} in
         ;;
     status)
         status
-        ;;           
-    *)              
-esac 
+        ;;
+    *)
+esac
