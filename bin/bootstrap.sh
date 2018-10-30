@@ -11,6 +11,7 @@ apt-get -y install \
     jq \
     vim \
     unzip \
+    fail2ban \
     git && \
     apt-get clean all
 
