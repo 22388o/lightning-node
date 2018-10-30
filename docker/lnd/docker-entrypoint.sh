@@ -44,22 +44,19 @@ RPCPASS=$(set_default "${RPCPASS}" "password")
 DEBUG=$(set_default "${DEBUG}" "debug")
 NETWORK=$(set_default "${NETWORK}" "mainnet")
 CHAIN=$(set_default "${CHAIN}" "bitcoin")
-BACKEND=$(set_default "${BACKEND}" "btcd")
-# BACKEND="bitcoind"
-# if [[ "${CHAIN}" == "litecoin" ]]; then
-#     BACKEND="ltcd"
-# fi
+BACKEND=$(set_default "${BACKEND}" "bitcoind")
+if [[ "${CHAIN}" == "litecoin" ]]; then
+    BACKEND="ltcd"
+fi
 
-exec lnd \
+su bitcoin -c "lnd \
     --noseedbackup \
-    --logdir=/data \
-    --datadir=/data \
     --${CHAIN}.active \
     --${CHAIN}.${NETWORK} \
     --${CHAIN}.node=${BACKEND} \
-    --${BACKEND}.rpccert=/rpc.cert \
-    --${BACKEND}.rpchost=blockchain \
     --${BACKEND}.rpcuser=${RPCUSER} \
     --${BACKEND}.rpcpass=${RPCPASS} \
+    --${BACKEND}.zmqpubrawblock=tcp://127.0.0.1:28332 \
+    --${BACKEND}.zmqpubrawtx=tcp://127.0.0.1:28333 \
     --debuglevel=${DEBUG} \
-    $@
+    $@"

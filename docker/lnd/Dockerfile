@@ -27,6 +27,16 @@ EXPOSE 9735 10009
 COPY --from=builder /go/bin/lncli /bin/
 COPY --from=builder /go/bin/lnd /bin/
 
+RUN addgroup bitcoin && adduser -D -G bitcoin -s /bin/bash bitcoin
+# create data directory
+ENV LIGHTNING_DATA /data
+RUN mkdir "$LIGHTNING_DATA" \
+    && chown -R bitcoin:bitcoin "$LIGHTNING_DATA" \
+    && ln -sfn "$LIGHTNING_DATA" /home/bitcoin/.lnd \
+    && chown -h bitcoin:bitcoin /home/bitcoin/.lnd
+
+COPY lnd.conf /home/bitcoin/.lnd/lnd.conf 
+
 # Add bash.
 RUN apk add --no-cache \
     bash
