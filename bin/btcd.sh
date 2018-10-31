@@ -7,7 +7,7 @@ ARG=$1
 function start() {
     docker run --rm --name ${BTCNAME} -d \
         -v ${MNTVOL}/${BTCNAME}:/home/$RUNAS/.bitcoin \
-        -p 127.0.0.1:9735:9735 \
+        -p 0.0.0.0:9735:9735 \
         -p 127.0.0.1:28332:28332 \
         -p 127.0.0.1:28333:28333 \
         ${BTCIMAGE}
