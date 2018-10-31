@@ -1,7 +1,7 @@
 RUNAS=${RUNAS:=bitcoin}
 MNTVOL=${MNTVOL:='/scratch/bitcoin/mainnet'}
 DEVICE=${DEVICE:='/dev/sda'}
-BTCIMAGE=${BTCIMAGE:='jr0sco/btcd:latest'}
+BTCIMAGE=${BTCIMAGE:='jr0sco/bitcoind:latest'}
 BTCNAME=${BTCNAME:=bitcoind}
 LNDIMAGE=${LNDIMAGE:='jr0sco/lnd:latest'}
 LNDNAME=${LNDNAME:=lightning}
