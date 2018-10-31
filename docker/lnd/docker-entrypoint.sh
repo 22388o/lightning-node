@@ -54,6 +54,8 @@ su bitcoin -c "lnd \
     --${CHAIN}.active \
     --${CHAIN}.${NETWORK} \
     --${CHAIN}.node=${BACKEND} \
+    --${BACKEND}.rpcuser=${BITCOIN_RPC_USER} \
+    --${BACKEND}.rpcpass=${BITCOIN_RPC_PASSWORD} \
     --${BACKEND}.zmqpubrawblock=tcp://127.0.0.1:28332 \
     --${BACKEND}.zmqpubrawtx=tcp://127.0.0.1:28333 \
     --debuglevel=${DEBUG} \
