@@ -5,8 +5,8 @@ source ${pwd/}init.sh #TODO: fix this so the dir is set as a var
 ARG=$1
 
 function start() {
-    #waitforblock
-    docker run --rm --name ${LNDNAME} --network container:${BTCNAME} \
+    # waitforblock
+    docker run --rm --name ${LNDNAME} --network container:${BTCNAME} -d \
         -v ${MNTVOL}/${BTCNAME}:/home/$RUNAS/.bitcoin \
         -v ${MNTVOL}/${LNDNAME}:/home/$RUNAS/.lnd \
         ${LNDIMAGE}
