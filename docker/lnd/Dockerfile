@@ -40,8 +40,6 @@ COPY lnd.conf /home/bitcoin/.lnd/lnd.conf
 # Add bash.
 RUN apk add --no-cache \
     bash
-     
-COPY rpc.cert /rpc.cert
 
 # Copy the entrypoint script.
 COPY docker-entrypoint.sh /docker-entrypoint.sh
