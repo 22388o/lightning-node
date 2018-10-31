@@ -39,8 +39,8 @@ set_default() {
 }
 
 # Set default variables if needed.
-RPCUSER=$(set_default "${RPCUSER}" "bitcoin")
-RPCPASS=$(set_default "${RPCPASS}" "password")
+BITCOIN_RPC_USER=$(set_default "${BITCOIN_RPC_USER}" "bitcoin")
+BITCOIN_RPC_PASSWORD=$(set_default "${BITCOIN_RPC_PASSWORD}" "password")
 DEBUG=$(set_default "${DEBUG}" "debug")
 NETWORK=$(set_default "${NETWORK}" "mainnet")
 CHAIN=$(set_default "${CHAIN}" "bitcoin")
@@ -54,8 +54,6 @@ su bitcoin -c "lnd \
     --${CHAIN}.active \
     --${CHAIN}.${NETWORK} \
     --${CHAIN}.node=${BACKEND} \
-    --${BACKEND}.rpcuser=${RPCUSER} \
-    --${BACKEND}.rpcpass=${RPCPASS} \
     --${BACKEND}.zmqpubrawblock=tcp://127.0.0.1:28332 \
     --${BACKEND}.zmqpubrawtx=tcp://127.0.0.1:28333 \
     --debuglevel=${DEBUG} \
