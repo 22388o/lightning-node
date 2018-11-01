@@ -14,7 +14,7 @@ mkdir -p ${MNTVOL}/${BTCNAME}
 
 function waitforblock() {
     while true; do
-        LOCALBLK=$(docker exec -it ${BTCNAME} su ${RUNAS} -c "bitcoin-cli getblockchaininfo|grep blocks|cut -d: -f2|cut -d, -f1 | tr -dc '[:alnum:]\n\r'")
+        LOCALBLK=$(docker exec -it ${BTCNAME} su ${RUNAS} -c "bitcoin-cli getblockchaininfo|grep blocks|cut -d: -f2|cut -d, -f1| tr -d '[:space:]'")
         CURRENTBLK=$(curl -s https://blockchain.info/q/getblockcount)
         test -z ${LOCALBLK} && LOCALBLK=0
         if [ ${LOCALBLK} == ${CURRENTBLK} ]; then
