@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ${pwd/}init.sh #TODO: fix this so the dir is set as a var
+source $(pwd)/init.sh #TODO: fix this so the dir is set as a var
 
 ARG=$1
 
