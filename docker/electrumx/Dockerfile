@@ -1,18 +1,20 @@
-# FROM ubuntu
 FROM python:3.6.7-slim
 
-# https://github.com/kyuupichan/electrumx/blob/master/electrumx/lib/coins.py
+# https://electrumx.readthedocs.io/en/latest/environment.html#envvar-COIN
 ENV COIN BitcoinSegwit
 # https://electrumx.readthedocs.io/en/latest/environment.html#envvar-DB_DIRECTORY
-ENV DAEMON_URL electrumx:password@127.0.0.1
+ENV DAEMON_URL bitcoin:password@127.0.0.1
 # https://electrumx.readthedocs.io/en/latest/environment.html#envvar-DAEMON_URL
 ENV DB_DIRECTORY /home/electrumx
+# https://electrumx.readthedocs.io/en/latest/environment.html#envvar-RPC_HOST
+ENV RPC_HOST 127.0.0.1
+# https://electrumx.readthedocs.io/en/latest/environment.html#envvar-RPC_PORT
+ENV RPC_PORT 8000
 
 RUN groupadd -r electrumx && useradd -r -m -g electrumx electrumx
 
 RUN apt update && \
         apt install -y \
-        python3-pip \
         build-essential libc6-dev \
         libncurses5-dev libncursesw5-dev \
         libreadline6-dev \
@@ -29,4 +31,5 @@ RUN git clone https://github.com/kyuupichan/electrumx.git /opt/electrumx && \
 ADD docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 
+EXPOSE 8000
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
