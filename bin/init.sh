@@ -1,5 +1,5 @@
 RUNAS=${RUNAS:=bitcoin}
-MNTVOL=${MNTVOL:='/scratch/bitcoin/mainnet'}
+MNTVOL=${MNTVOL:='/Users/joel.cumberland/bitcoin/mainnet'}
 DEVICE=${DEVICE:='/dev/sda'}
 BTCIMAGE=${BTCIMAGE:='jr0sco/bitcoind:latest'}
 BTCNAME=${BTCNAME:=bitcoind}
