@@ -1,4 +1,5 @@
 alias btc-logs='docker logs bitcoind --tail 10 -f' 
-alias lnd-logs='docker logs lightning --tail 10 -f' 
-alias btc-cli='docker run --rm --network container:bitcoind -v /scratch/bitcoin/mainnet/bitcoind:/data jr0sco/bitcoind su bitcoin -c bitcoin-cli $@' 
-alias lnd-cli='docker run --rm --network container:lightning -v /scratch/bitcoin/mainnet/lightning:/data jr0sco/lnd su bitcoin -c lightning-cli $@' 
+alias lnd-logs='docker logs lightning --tail 10 -f'
+alias elect-logs='docker logs electrumx --tail 10 -f'
+alias btc-cli='docker exec -it bitcoind su bitcoin -c "bitcoin-cli $@"' 
+alias lnd-cli='docker exec -it lightning su bitcoin -c "lncli $@"' 
