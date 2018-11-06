@@ -1,7 +1,9 @@
 FROM python:3.6.7-slim
 
 # https://electrumx.readthedocs.io/en/latest/environment.html#envvar-COIN
-ENV COIN BitcoinSegwit
+ENV COIN BitcoinSegwitTestnet
+# https://electrumx.readthedocs.io/en/latest/environment.html#envvar-NET
+ENV NET testnet
 # https://electrumx.readthedocs.io/en/latest/environment.html#envvar-DB_DIRECTORY
 ENV DAEMON_URL bitcoin:password@127.0.0.1
 # https://electrumx.readthedocs.io/en/latest/environment.html#envvar-DAEMON_URL
