@@ -1,16 +1,16 @@
 RUNAS=${RUNAS:=bitcoin}
-MNTVOL=${MNTVOL:='/Users/joel.cumberland/bitcoin/mainnet'}
+MNTVOL=${MNTVOL:='/home/bitcoin/mainnet'}
 DEVICE=${DEVICE:='/dev/sda'}
-BTCIMAGE=${BTCIMAGE:='jr0sco/bitcoind:latest'}
+BTCIMAGE=${BTCIMAGE:='jr0sco/bitcoind'}
 BTCNAME=${BTCNAME:=bitcoind}
-LNDIMAGE=${LNDIMAGE:='jr0sco/lnd:latest'}
+LNDIMAGE=${LNDIMAGE:='jr0sco/lnd'}
 LNDNAME=${LNDNAME:=lightning}
 APPDIR=${APPDIR:='/opt/lightning-node'}
 
 mkdir -p ${MNTVOL}/${LNDNAME}
 mkdir -p ${MNTVOL}/${BTCNAME}
 
-# mountpoint ${MNTVOL} || exit
+mountpoint ${MNTVOL} || exit
 
 function waitforblock() {
     while true; do
