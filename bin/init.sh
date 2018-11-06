@@ -22,7 +22,7 @@ function waitforblock() {
             break;
         else
             echo "waiting for blocks to sync ${LOCALBLK}/${CURRENTBLK}"
-            sleep 1
+            sleep 3
         fi
     done
 }
