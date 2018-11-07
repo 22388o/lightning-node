@@ -18,8 +18,6 @@ RUN apk add --no-cache \
 # Start a new, final image to reduce size.
 FROM alpine as final
 
-# Expose lnd ports (server, rpc).
-EXPOSE 9735 10009
 
 # Copy the binaries and entrypoint from the builder image.
 COPY --from=builder /go/bin/lncli /bin/
@@ -42,4 +40,8 @@ RUN apk add --no-cache \
 # Copy the entrypoint script.
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
+
+# Expose lnd ports (server, rpc).
+EXPOSE 9735 10009
+
 ENTRYPOINT ["/docker-entrypoint.sh"]
