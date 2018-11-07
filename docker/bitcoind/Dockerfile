@@ -1,6 +1,7 @@
 FROM debian:stretch-slim
 
 RUN groupadd -r bitcoin && useradd -r -m -g bitcoin bitcoin
+ENV BITCOIN_VERSION 0.17.0.1
 
 RUN set -ex \
     && apt-get update \
@@ -8,9 +9,6 @@ RUN set -ex \
     && rm -rf /var/lib/apt/lists/*
 
 # install bitcoin binaries
-
-ENV BITCOIN_VERSION 0.17.0.1
-
 RUN set -ex \
     && BITCOIN_ARCHIVE=bitcoin-${BITCOIN_VERSION}-$(uname -m)-linux-gnu.tar.gz \
     && cd /tmp \
