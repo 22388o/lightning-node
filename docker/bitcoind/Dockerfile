@@ -1,7 +1,9 @@
 FROM debian:stretch-slim
 
-RUN groupadd -r bitcoin && useradd -r -m -g bitcoin bitcoin
 ENV BITCOIN_VERSION 0.17.0.1
+ENV BITCOIN_DATA /data
+
+RUN adduser --disabled-password --uid 1000 bitcoin --quiet
 
 RUN set -ex \
     && apt-get update \
