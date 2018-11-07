@@ -36,7 +36,6 @@ VOLUME /data
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
-
 EXPOSE 28332 28333
-CMD ["bitcoind"]
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
