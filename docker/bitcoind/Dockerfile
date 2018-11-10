@@ -26,15 +26,15 @@ RUN set -ex \
     && bitcoind --version    
 
 # create data directory
-ENV BITCOIN_DATA /data
 RUN mkdir "$BITCOIN_DATA" \
-    && chown -R bitcoin:bitcoin "$BITCOIN_DATA" \
+    && su bitcoin -c "mkdir -p /home/bitcoin/.bitcoin" \
     && ln -sfn "$BITCOIN_DATA" /home/bitcoin/.bitcoin \
-    && chown -h bitcoin:bitcoin /home/bitcoin/.bitcoin
+    && chown -R 1000:1000 "$BITCOIN_DATA" \
+    && chown -h 1000:1000 /home/bitcoin/.bitcoin
 
 VOLUME /data
 
-COPY docker-entrypoint.sh /docker-entrypoint.sh
+ADD docker-entrypoint.sh /
 
 EXPOSE 28332 28333
 
