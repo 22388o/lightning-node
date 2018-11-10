@@ -36,7 +36,7 @@ VOLUME /data
 
 ADD docker-entrypoint.sh /
 
-EXPOSE 28332 28333
+EXPOSE 8332 8333
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["bitcoind"]
