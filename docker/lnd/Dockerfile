@@ -27,11 +27,10 @@ COPY --from=builder /go/bin/lnd /bin/
 RUN addgroup -g 1000 bitcoin && adduser -u 1000 -D -G bitcoin -s /bin/sh bitcoin
 # create data directory
 RUN mkdir "$LIGHTNING_DATA" \
-    && chown -R bitcoin:bitcoin "$LIGHTNING_DATA" \
+    && chown -R 1000:1000 "$LIGHTNING_DATA" \
     && ln -sfn "$LIGHTNING_DATA" /home/bitcoin/.lnd \
-    && chown -h bitcoin:bitcoin /home/bitcoin/.lnd
-
-COPY lnd.conf /home/bitcoin/.lnd/lnd.conf 
+    && chown -R 1000:1000 "$LIGHTNING_DATA" \
+    && chown -h 1000:1000 /home/bitcoin/.lnd
 
 # Add bash.
 RUN apk add --no-cache \
