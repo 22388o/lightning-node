@@ -26,7 +26,8 @@ COPY --from=builder /go/bin/lnd /bin/
 
 RUN addgroup -g 1000 bitcoin && adduser -u 1000 -D -G bitcoin -s /bin/sh bitcoin
 # create data directory
-RUN mkdir "$LIGHTNING_DATA" \
+RUN set -ex \
+    && mkdir "$LIGHTNING_DATA" \
     && chown -R 1000:1000 "$LIGHTNING_DATA" \
     && ln -sfn "$LIGHTNING_DATA" /home/bitcoin/.lnd \
     && chown -R 1000:1000 "$LIGHTNING_DATA" \
