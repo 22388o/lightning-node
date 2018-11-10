@@ -26,7 +26,8 @@ RUN set -ex \
     && bitcoind --version    
 
 # create data directory
-RUN mkdir "$BITCOIN_DATA" \
+RUN set -ex \ 
+    && mkdir "$BITCOIN_DATA" \
     && su bitcoin -c "mkdir -p /home/bitcoin/.bitcoin" \
     && ln -sfn "$BITCOIN_DATA" /home/bitcoin/.bitcoin \
     && chown -R 1000:1000 "$BITCOIN_DATA" \
