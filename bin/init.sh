@@ -5,10 +5,13 @@ BTCIMAGE=${BTCIMAGE:='jr0sco/bitcoind'}
 BTCNAME=${BTCNAME:=bitcoind}
 LNDIMAGE=${LNDIMAGE:='jr0sco/lnd'}
 LNDNAME=${LNDNAME:=lightning}
+ELECXNAME=${ELECXNAME:=electrumx}
+ELECXIMAGE=${ELECXIMAGE:='jr0sco/electrumx'}
 APPDIR=${APPDIR:='/opt/lightning-node'}
 
 mkdir -p ${MNTVOL}/${LNDNAME}
 mkdir -p ${MNTVOL}/${BTCNAME}
+mkdir -p ${MNTVOL}/${ELECXNAME}
 
 mountpoint ${MNTVOL} || exit
 
