@@ -10,7 +10,7 @@ function start() {
     docker run --rm --name ${ELECXNAME} --network container:${BTCNAME} -d \
         --env-file ${MNTVOL}/${ELECXNAME}/.env \
         -v ${MNTVOL}/${BTCNAME}:/home/$RUNAS/.bitcoin \
-        ${LNDIMAGE}
+        ${ELECXIMAGE}
 }
 
 function stop() {
