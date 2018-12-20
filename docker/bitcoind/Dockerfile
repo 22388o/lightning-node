@@ -37,7 +37,11 @@ VOLUME /data
 
 ADD docker-entrypoint.sh /
 
-EXPOSE 8332 8333
+# mainnet and testnet ports (rpc, http)
+EXPOSE 8332 8333 18332 18333
+
+# mainnet and testnet zmq interfaces (block, tx)
+EXPOSE 28333 28334
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["bitcoind"]
