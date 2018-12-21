@@ -1,9 +1,6 @@
 FROM debian:stretch-slim
 
 ENV BITCOIN_VERSION 0.17.0.1
-ENV BITCOIN_DATA /data
-
-RUN adduser --disabled-password --uid 1000 bitcoin --quiet
 
 RUN set -ex \
     && apt-get update \
@@ -19,29 +16,23 @@ RUN set -ex \
     && wget -q https://bitcoin.org/laanwj-releases.asc \
     && SHA256=`grep "${BITCOIN_ARCHIVE}" SHA256SUMS.asc | awk '{print $1}'` \
     && echo "$SHA256 ${BITCOIN_ARCHIVE}" | sha256sum -c - \
-    && gpg --import ./laanwj-releases.asc \
-    && gpg --verify SHA256SUMS.asc \
+    && gpg --no-tty  --import ./laanwj-releases.asc \
+    && gpg --no-tty  --verify SHA256SUMS.asc \
     && tar -xzf ${BITCOIN_ARCHIVE} -C /usr/local --strip-components=1 --exclude=*-qt \
     && rm -rf /tmp/* \
     && bitcoind --version    
 
-# create data directory
-RUN set -ex \ 
-    && mkdir "$BITCOIN_DATA" \
-    && su bitcoin -c "mkdir -p /home/bitcoin/.bitcoin" \
-    && ln -sfn "$BITCOIN_DATA" /home/bitcoin/.bitcoin \
-    && chown -R 1000:1000 "$BITCOIN_DATA" \
-    && chown -h 1000:1000 /home/bitcoin/.bitcoin
-
-VOLUME /data
+# create user and data directory
+RUN set -ex \
+    && adduser --disabled-password --home /data --uid 1000 bitcoin --quiet 
 
 ADD docker-entrypoint.sh /
 
 # mainnet and testnet ports (rpc, http)
-EXPOSE 8332 8333 18332 18333
+EXPOSE 8332 8333
 
 # mainnet and testnet zmq interfaces (block, tx)
-EXPOSE 28333 28334
+EXPOSE 18332 18333 28333 28334
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["bitcoind"]
+CMD ["bitcoind", "-datadir=/data"]

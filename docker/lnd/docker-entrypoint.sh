@@ -10,13 +10,12 @@ DEBUG=${DEBUG:-info}
 NETWORK=${NETWORK:-mainnet}
 CHAIN=${CHAIN:-bitcoin}
 BACKEND=${BACKEND:-bitcoind}
-ZMQ_PUB_RAW_TX=${ZMQ_PUB_RAW_TX:-"tcp://127.0.0.1:8332"}
-ZMQ_PUB_RAW_BLK=${ZMQ_PUB_RAW_BLK:-"tcp://127.0.0.1:8333"}
+ZMQ_PUB_RAW_TX=${ZMQ_PUB_RAW_TX:-"tcp://127.0.0.1:28332"}
+ZMQ_PUB_RAW_BLK=${ZMQ_PUB_RAW_BLK:-"tcp://127.0.0.1:28333"}
+LIGHTNING_DATA=${LIGHTNING_DATA:-"/data/.lnd"}
 if [[ "${CHAIN}" == "litecoin" ]]; then
     BACKEND="ltcd"
 fi
-
-mkdir -p "${LIGHTNING_DATA}"
 
 PARAMS=$(echo \
     "--${CHAIN}.active" \
@@ -27,10 +26,13 @@ PARAMS=$(echo \
     "--${BACKEND}.zmqpubrawblock=${ZMQ_PUB_RAW_TX}" \
     "--${BACKEND}.zmqpubrawtx=${ZMQ_PUB_RAW_BLK}" \
     "--debuglevel=${DEBUG}" \
-    "--configfile=${LIGHTNING_DATA}/lnd.conf"
+    "--lnddir=${LIGHTNING_DATA}" \
+    "--configfile=${LIGHTNING_DATA}/lnd.conf" \
+    "--bitcoind.dir=/data/"
 )
 
 if [[ ! -s "${LIGHTNING_DATA}/lnd.conf" ]]; then
+    mkdir -p ${LIGHTNING_DATA}; touch ${LIGHTNING_DATA}/lnd.conf
 cat <<-EOF > "${LIGHTNING_DATA}/lnd.conf"
     [Application Options]
     maxpendingchannels=5
@@ -43,5 +45,4 @@ EOF
     chown -R 1000:1000 "${LIGHTNING_DATA}/"
 fi
 
-su bitcoin -c "lnd ${PARAMS} \
-    $@"
+su bitcoin -c "lnd ${PARAMS} $@"

@@ -18,26 +18,15 @@ RUN apk add --no-cache \
 # Start a new, final image to reduce size.
 FROM alpine as final
 
-ENV LIGHTNING_DATA /data
-
 # Copy the binaries and entrypoint from the builder image.
 COPY --from=builder /go/bin/lncli /bin/
 COPY --from=builder /go/bin/lnd /bin/
 
-RUN addgroup -g 1000 bitcoin && adduser -u 1000 -D -G bitcoin -s /bin/sh bitcoin
-# create data directory
-RUN set -ex \
-    && mkdir "$LIGHTNING_DATA" \
-    && chown -R 1000:1000 "$LIGHTNING_DATA" \
-    && ln -sfn "$LIGHTNING_DATA" /home/bitcoin/.lnd \
-    && chown -R 1000:1000 "$LIGHTNING_DATA" \
-    && chown -h 1000:1000 /home/bitcoin/.lnd
+RUN addgroup -g 1000 bitcoin && adduser -u 1000 -D -G bitcoin -h /data -s /bin/sh bitcoin
 
 # Add bash.
 RUN apk add --no-cache \
     bash
-
-VOLUME /data
 
 # Copy the entrypoint script.
 COPY docker-entrypoint.sh /docker-entrypoint.sh

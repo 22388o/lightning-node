@@ -6,5 +6,5 @@ cd ../
 docker build -t jr0sco/lnd .
 docker build -t jr0sco/lnd:lnd-${LND_VERSION} .
 
-#docker push jr0sco/lnd
-#docker push jr0sco/lnd:lnd-${LND_VERSION}
+docker push jr0sco/lnd
+docker push jr0sco/lnd:lnd-${LND_VERSION}
