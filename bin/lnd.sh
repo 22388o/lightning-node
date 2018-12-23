@@ -9,8 +9,8 @@ function start() {
     waitforblock
     docker run --rm --name ${LNDNAME} --network container:${BTCNAME} -d \
         --env-file ${MNTVOL}/${LNDNAME}/.env \
-        -v ${MNTVOL}/${BTCNAME}:/home/$RUNAS/.bitcoin \
-        -v ${MNTVOL}/${LNDNAME}:/home/$RUNAS/.lnd \
+        -v ${MNTVOL}/${BTCNAME}:/data \
+        -v ${MNTVOL}/${LNDNAME}:/data/.lnd \
         ${LNDIMAGE}
 }
 
