@@ -3,7 +3,7 @@ FROM python:3.6.7-slim
 ENV VERSION 1.8.12
 
 # https://electrumx.readthedocs.io/en/latest/environment.html#envvar-COIN
-ENV COIN BitcoinSegwitTestnet
+ENV COIN BitcoinSegwit
 # https://electrumx.readthedocs.io/en/latest/environment.html#envvar-NET
 ENV NET testnet
 # https://electrumx.readthedocs.io/en/latest/environment.html#envvar-DB_DIRECTORY
