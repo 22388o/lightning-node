@@ -6,7 +6,6 @@ ARG=$1
 
 function start() {
     touch ${MNTVOL}/${ELECXNAME}/.env
-    waitforblock
     docker run --rm --name ${ELECXNAME} --network container:${BTCNAME} -d \
         --env-file ${MNTVOL}/${ELECXNAME}/.env \
         -v ${MNTVOL}/${BTCNAME}:/home/$RUNAS/.bitcoin \
