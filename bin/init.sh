@@ -13,7 +13,9 @@ mkdir -p ${MNTVOL}/${LNDNAME}
 mkdir -p ${MNTVOL}/${BTCNAME}
 mkdir -p ${MNTVOL}/${ELECXNAME}
 
-mountpoint ${MNTVOL} || exit
+function checkmountpoint() {
+    mountpoint ${MNTVOL} || exit
+}
 
 function waitforblock() {
     while true; do
