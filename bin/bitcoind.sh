@@ -1,6 +1,7 @@
 #!/bin/bash
 
-source $(pwd)/init.sh #TODO: fix this so the dir is set as a var
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+source ${DIR}/init.sh
 
 ARG=$1
 
