@@ -1,6 +1,5 @@
 FROM python:3.6.7-slim
 
-ENV VERSION 1.8.12
 ENV VERSION 1.9.3
 
 # https://electrumx.readthedocs.io/en/latest/environment.html#envvar-COIN
@@ -29,9 +28,6 @@ RUN apt update && \
 
 RUN pip3 install plyvel
 
-RUN git clone https://github.com/kyuupichan/electrumx.git /opt/electrumx && \
-    cd /opt/electrumx && \
-    python3 setup.py install
 RUN git clone https://github.com/kyuupichan/electrumx.git /opt/electrumx \
     && cd /opt/electrumx \
     && git checkout tags/${VERSION} \
