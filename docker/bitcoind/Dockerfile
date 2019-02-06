@@ -32,7 +32,7 @@ ADD docker-entrypoint.sh /
 EXPOSE 8332 8333
 
 # mainnet and testnet zmq interfaces (block, tx)
-EXPOSE 18332 18333 28333 28334
+EXPOSE 18332 18333 28332 28333
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["bitcoind", "-datadir=/data"]
