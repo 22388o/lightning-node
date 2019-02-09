@@ -13,6 +13,7 @@ cat <<-EOF > ${DATA_DIR}/bitcoin.conf
     rpcuser=${BITCOIN_RPC_USER:-bitcoin}
     rpcport=${BITCOIN_RPC_PORT:-8332}
     server=${BITCOIN_SERVER:-1}
+    listen=${LISTEN:-1}
     testnet=${BITCOIN_TESTNET:-0}
     zmqpubrawblock=${ZMQ_PUB_RAW_BLK:-"tcp://127.0.0.1:28333"}
     zmqpubrawtx=${ZMQ_PUB_RAW_TX:-"tcp://127.0.0.1:28332"}
