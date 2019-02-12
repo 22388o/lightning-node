@@ -1,10 +1,6 @@
 #!/bin/sh
 
-cd lnd_src && LND_VERSION=$(git describe --abbrev=0 --tags)
-
-cd ../
+LND_VERSION=$(grep LND_VERSION= Dockerfile | cut -d= -f2)
 docker build -t jr0sco/lnd .
-docker build -t jr0sco/lnd:lnd-${LND_VERSION} .
-
-docker push jr0sco/lnd
+docker tag jr0sco/lnd jr0sco/lnd:lnd-${LND_VERSION} 
 docker push jr0sco/lnd:lnd-${LND_VERSION}
