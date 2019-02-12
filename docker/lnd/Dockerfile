@@ -1,7 +1,5 @@
 FROM golang:1.11-alpine as builder
 
-# Copy in the local repository to build from.
-COPY lnd_src/ /go/src/github.com/lightningnetwork/lnd
 ARG LND_VERSION=v0.5.2-beta
 
 # Force Go to use the cgo based DNS resolver. This is required to ensure DNS
@@ -9,12 +7,15 @@ ARG LND_VERSION=v0.5.2-beta
 ENV GODEBUG netdns=cgo
 
 # Install dependencies and install/build lnd.
-RUN apk add --no-cache \
-    git \
-    make \
-&&  cd /go/src/github.com/lightningnetwork/lnd \
-&&  make \
-&&  make install
+RUN apk add --no-cache --update alpine-sdk \
+  git \
+  make
+
+RUN git clone https://github.com/lightningnetwork/lnd /go/src/github.com/lightningnetwork/lnd \ 
+  && cd /go/src/github.com/lightningnetwork/lnd \
+  && git checkout ${LND_VERSION} \
+  && make \
+  && make install
 
 # Start a new, final image to reduce size.
 FROM alpine as final
@@ -23,11 +24,12 @@ FROM alpine as final
 COPY --from=builder /go/bin/lncli /bin/
 COPY --from=builder /go/bin/lnd /bin/
 
-RUN addgroup -g 1000 bitcoin && adduser -u 1000 -D -G bitcoin -h /data -s /bin/sh bitcoin
+RUN addgroup -g 1000 bitcoin \
+    && adduser -u 1000 -D -G bitcoin -h /data -s /bin/sh bitcoin
 
 # Add bash.
 RUN apk add --no-cache \
-    bash
+  bash
 
 # Copy the entrypoint script.
 COPY docker-entrypoint.sh /docker-entrypoint.sh
