@@ -1,4 +1,4 @@
-FROM golang:1.10-alpine as builder
+FROM golang:1.11-alpine as builder
 
 # Copy in the local repository to build from.
 COPY lnd_src/ /go/src/github.com/lightningnetwork/lnd
