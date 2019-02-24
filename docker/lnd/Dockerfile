@@ -13,7 +13,7 @@ RUN apk add --no-cache --update alpine-sdk \
 
 RUN git clone https://github.com/lightningnetwork/lnd /go/src/github.com/lightningnetwork/lnd \ 
   && cd /go/src/github.com/lightningnetwork/lnd \
-  && git checkout ${LND_VERSION} \
+  && git checkout tags/${LND_VERSION} \
   && make \
   && make install
 
