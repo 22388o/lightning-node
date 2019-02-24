@@ -8,18 +8,19 @@ RPCUSER=${RPCUSER:-bitcoin}
 RPCPASS=${RPCPASS:-password}
 DEBUG=${DEBUG:-info}
 NETWORK=${NETWORK:-simnet}
-BTCD_DATA=${BTCD_DATA:-"/data/.btcd"}
+BTCD_DATA=${BTCD_DATA:-"/data"}
+LISTEN=${LISTEN:-"0.0.0.0"}
 
 PARAMS=$(echo \
     "--debuglevel=$DEBUG" \
     "--rpcuser=$RPCUSER" \
     "--rpcpass=$RPCPASS" \
-    "--datadir=/data" \
-    "--logdir=/data" \
-    "--configfile=/data/.btcd/btcd.conf" \
+    "--datadir=${BTCD_DATA}" \
+    "--logdir=${BTCD_DATA}" \
+    "--configfile=${BTCD_DATA}/btcd.conf" \
     "--rpccert=/rpc/rpc.cert" \
     "--rpckey=/rpc/rpc.key" \
-    "--rpclisten=0.0.0.0" \
+    "--rpclisten=${LISTEN}" \
     "--txindex"
 )
 
@@ -33,7 +34,6 @@ fi
 # Add user parameters to command.
 PARAMS="$PARAMS $@"
 
-# Print command and start bitcoin node.
-echo "Command: btcd $PARAMS"
+# start bitcoin node.
 exec btcd $PARAMS
 
