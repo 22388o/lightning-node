@@ -3,6 +3,8 @@ MNTVOL=${MNTVOL:='/home/bitcoin/mainnet'}
 DEVICE=${DEVICE:='/dev/sda'}
 BTCIMAGE=${BTCIMAGE:='jr0sco/bitcoind'}
 BTCNAME=${BTCNAME:=bitcoind}
+BTCIMAGE=${BTCDIMAGE:='jr0sco/btcd'}
+BTCNAME=${BTCDNAME:=btcd}
 LNDIMAGE=${LNDIMAGE:='jr0sco/lnd'}
 LNDNAME=${LNDNAME:=lightning}
 ELECXNAME=${ELECXNAME:=electrumx}
