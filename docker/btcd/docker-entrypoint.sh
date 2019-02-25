@@ -7,7 +7,7 @@ set -e
 RPCUSER=${RPCUSER:-bitcoin}
 RPCPASS=${RPCPASS:-password}
 DEBUG=${DEBUG:-info}
-BTCD_DATA=${BTCD_DATA:-"/data"}
+BTCD_DATA=${BTCD_DATA:-"/data/.btcd"}
 LISTEN=${LISTEN:-"0.0.0.0"}
 
 PARAMS=$(echo \

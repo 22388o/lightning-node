@@ -40,12 +40,12 @@ RUN addgroup -g 1000 bitcoin \
 RUN apk add --no-cache \
     bash \
     ca-certificates \
-&&  mkdir -p "/data/" \
-&&  touch "/data/btcd.conf" \
+&&  mkdir -p "/data/.btcd" \
+&&  touch "/data/.btcd/btcd.conf" \
 &&  chmod +x /docker-entrypoint.sh \
 # manually generate certificate and add all domains, it is needed to connect
 # "btcctl" and "lnd" to "btcd" over docker links.
-&& "/bin/gencerts" --host="*" --directory="/data/" --force
+&& "/bin/gencerts" --host="*" --directory="/data/.btcd" --force
 
 # create a volume to house pregenerated RPC credentials. This will be
 # shared with any lnd, btcctl containers so they can securely query btcd's RPC
@@ -53,7 +53,7 @@ RUN apk add --no-cache \
 # you should NOT do this before certificate generation!
 # otherwise manually generated certificate will be overridden with shared
 # mounted volume! For more info read dockerfile "VOLUME" documentation.
-VOLUME ["/data"]
+VOLUME ["/data/.btcd"]
 
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
-CMD ["--datadir=/data"]
+CMD ["--datadir=/data/.btcd"]
