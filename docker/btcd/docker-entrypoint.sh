@@ -7,7 +7,6 @@ set -e
 RPCUSER=${RPCUSER:-bitcoin}
 RPCPASS=${RPCPASS:-password}
 DEBUG=${DEBUG:-info}
-NETWORK=${NETWORK:-simnet}
 BTCD_DATA=${BTCD_DATA:-"/data"}
 LISTEN=${LISTEN:-"0.0.0.0"}
 
@@ -18,8 +17,8 @@ PARAMS=$(echo \
     "--datadir=${BTCD_DATA}" \
     "--logdir=${BTCD_DATA}" \
     "--configfile=${BTCD_DATA}/btcd.conf" \
-    "--rpccert=/rpc/rpc.cert" \
-    "--rpckey=/rpc/rpc.key" \
+    "--rpccert=${BTCD_DATA}/rpc.cert" \
+    "--rpckey=${BTCD_DATA}/rpc.key" \
     "--rpclisten=${LISTEN}" \
     "--txindex"
 )
@@ -35,5 +34,5 @@ fi
 PARAMS="$PARAMS $@"
 
 # start bitcoin node.
-exec btcd $PARAMS
+exec su bitcoin -c "btcd $PARAMS"
 
