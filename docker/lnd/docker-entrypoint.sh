@@ -38,7 +38,6 @@ cat <<-EOF > "${LIGHTNING_DATA}/lnd.conf"
     maxpendingchannels=5
 
     [autopilot]
-    autopilot.active=1
     autopilot.maxchannels=5
     autopilot.allocation=0.6
 EOF
