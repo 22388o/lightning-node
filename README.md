@@ -5,7 +5,13 @@ Repo for spinning up your own Lightning Node Stack (bitcoind, lnd, neutrino)
 Bitcoin (bitcoind) Container 
 ---
 See [Dockerfile](./docker/bitcoind/Dockerfile)
-### Environment Values
+### Dockerfile Argument Values
+|Key|Default Values|Info|
+|---|---|---|
+|BITCOIN_VERSION|0.17.0.1|Bitcoin version to use|
+|USER_ID|1000|The run container as bitcoin UID. Make this the same as the local directory UID permissions |
+
+### Container Environment Values
 -----
 |Key|Default Values|Info|
 |---|---|---|
@@ -24,6 +30,14 @@ See [Dockerfile](./docker/bitcoind/Dockerfile)
 ```bash
 docker build -t bitcoind .
 ```
+Run with differnet Bitcoin version
+```bash
+docker build --build-arg BITCOIN_VERSION=0.16.3 -t bitcoind .
+```
+Run with different UID
+```bash
+docker build --build-arg USER_ID=1001 -t bitcoind .
+```
 
 Run bitcoind
 
@@ -39,7 +53,13 @@ docker run --name bitcoind -d \
 Lightning (lnd) Container
 ---
 See [Dockerfile](./docker/lnd/Dockerfile)
-### Environment Values
+### Dockerfile Argument Values
+|Key|Default Values|Info|
+|---|---|---|
+|LND_VERSION|v0.5.2-beta|Lightning version to use|
+|USER_ID|1000|The run container as bitcoin UID. Make this the same as the local directory UID permissions|
+
+### Container Environment Values
 
 |Key|Default Values|Info|
 |---|---|---|
@@ -59,11 +79,28 @@ See [Dockerfile](./docker/lnd/Dockerfile)
 ```bash
 docker build -t lnd .
 ```
-Run lnd
+Run with differnet Lightning version
+```bash
+docker build --build-arg LND_VERSION=0.16.3 -t lnd .
+```
+Run with different UID
+```bash
+docker build --build-arg USER_ID=1001 -t lnd .
+```
+Run Lightning with Bitcoin Backend
 
 ```bash
 docker run --rm --name lnd --network container:bitcoind -d \
     -v {local.bitcoin.dir}:/data \
+    -v :/data/.lnd \
+    lnd
+```
+Run Lightning with Neutrino Backend
+
+```bash
+docker run --rm --name lnd -d \
+    -e BACKEND=neutrino \
+    -v {local.lightning.dir}:/data \
     -v :/data/.lnd \
     lnd
 ```

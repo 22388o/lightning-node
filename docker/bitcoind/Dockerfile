@@ -1,6 +1,7 @@
 FROM debian:stretch-slim
 
-ENV BITCOIN_VERSION 0.17.0.1
+ARG BITCOIN_VERSION=0.17.0.1
+ARG USER_ID=1000
 
 RUN set -ex \
     && apt-get update \
