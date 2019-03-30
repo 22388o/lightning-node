@@ -29,7 +29,6 @@ Run bitcoind
 
 ```bash
 docker run --name bitcoind -d \
-    --env-file /data/.bitcoin/.env \
     -v {local.bitcoin.dir}:/data \
     -p 0.0.0.0:9735:9735 \
     -p 127.0.0.1:28332:28332 \
@@ -64,7 +63,6 @@ Run lnd
 
 ```bash
 docker run --rm --name lnd --network container:bitcoind -d \
-    --env-file ~/data/.lnd/.env \
     -v {local.bitcoin.dir}:/data \
     -v :/data/.lnd \
     lnd
