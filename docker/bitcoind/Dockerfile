@@ -25,7 +25,7 @@ RUN set -ex \
 
 # create user and data directory
 RUN set -ex \
-    && adduser --disabled-password --home /data --uid 1000 bitcoin --quiet 
+    && adduser --disabled-password --home /data --uid ${USER_ID} bitcoin --quiet 
 
 ADD docker-entrypoint.sh /
 

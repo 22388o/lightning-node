@@ -25,8 +25,8 @@ FROM alpine as final
 COPY --from=builder /go/bin/lncli /bin/
 COPY --from=builder /go/bin/lnd /bin/
 
-RUN addgroup -g 1000 bitcoin \
-    && adduser -u 1000 -D -G bitcoin -h /data -s /bin/sh bitcoin
+RUN addgroup -g ${USER_ID} bitcoin \
+  && adduser -u ${USER_ID} -D -G bitcoin -h /data -s /bin/sh bitcoin
 
 # Add bash.
 RUN apk add --no-cache \

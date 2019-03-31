@@ -49,7 +49,7 @@ cat <<-EOF > "${LIGHTNING_DATA}/lnd.conf"
     autopilot.maxchannels=5
     autopilot.allocation=0.6
 EOF
-    chown -R 1000:1000 "${LIGHTNING_DATA}/"
+    chown -R bitcoin:bitcoin "${LIGHTNING_DATA}/"
 fi
 
 su bitcoin -c "lnd ${COMMON_PARAMS} \

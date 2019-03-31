@@ -30,15 +30,15 @@ See [Dockerfile](./docker/bitcoind/Dockerfile)
 ```bash
 docker build -t bitcoind .
 ```
-Run with differnet Bitcoin version
+Build with differnet Bitcoin version
 ```bash
 docker build --build-arg BITCOIN_VERSION=0.16.3 -t bitcoind .
 ```
-Run with different UID
+Build with different UID
 ```bash
 docker build --build-arg USER_ID=1001 -t bitcoind .
 ```
-
+---
 Run bitcoind
 
 ```bash
@@ -79,14 +79,15 @@ See [Dockerfile](./docker/lnd/Dockerfile)
 ```bash
 docker build -t lnd .
 ```
-Run with differnet Lightning version
+Build with differnet Lightning version
 ```bash
-docker build --build-arg LND_VERSION=0.16.3 -t lnd .
+docker build --build-arg LND_VERSION=lnd v0.5-beta -t lnd .
 ```
-Run with different UID
+Build with different UID
 ```bash
 docker build --build-arg USER_ID=1001 -t lnd .
 ```
+---
 Run Lightning with Bitcoin Backend
 
 ```bash
