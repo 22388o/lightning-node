@@ -20,12 +20,14 @@ RUN git clone https://github.com/lightningnetwork/lnd /go/src/github.com/lightni
 # Start a new, final image to reduce size.
 FROM alpine as final
 
+ARG USER_ID=1000
+
 # Copy the binaries and entrypoint from the builder image.
 COPY --from=builder /go/bin/lncli /bin/
 COPY --from=builder /go/bin/lnd /bin/
 
-RUN addgroup -g 1000 bitcoin \
-    && adduser -u 1000 -D -G bitcoin -h /data -s /bin/sh bitcoin
+RUN addgroup -g ${USER_ID} bitcoin \
+  && adduser -u ${USER_ID} -D -G bitcoin -h /data -s /bin/sh bitcoin
 
 # Add bash.
 RUN apk add --no-cache \

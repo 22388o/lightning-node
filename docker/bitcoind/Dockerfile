@@ -1,6 +1,7 @@
 FROM debian:stretch-slim
 
-ENV BITCOIN_VERSION 0.17.0.1
+ARG BITCOIN_VERSION=0.18.0
+ARG USER_ID=1000
 
 RUN set -ex \
     && apt-get update \
@@ -24,7 +25,7 @@ RUN set -ex \
 
 # create user and data directory
 RUN set -ex \
-    && adduser --disabled-password --home /data --uid 1000 bitcoin --quiet 
+    && adduser --disabled-password --home /data --uid ${USER_ID} bitcoin --quiet 
 
 ADD docker-entrypoint.sh /
 
