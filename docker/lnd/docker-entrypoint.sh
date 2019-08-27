@@ -4,6 +4,7 @@
 set -e
 
 # Set default variables if needed.
+BITCOIN_RPC_HOST=${BITCOIN_RPC_HOST:-localhost}
 BITCOIN_RPC_USER=${BITCOIN_RPC_USER:-bitcoin}
 BITCOIN_RPC_PASSWORD=${BITCOIN_RPC_PASSWORD:-password}
 DEBUG=${DEBUG:-info}
@@ -25,6 +26,7 @@ COMMON_PARAMS=$(echo \
 
 if echo ${BACKEND}|grep -q 'bitcoind\|btcd\|litecoind\|ltcd'; then
     BITCOIN_PARAMS=$(echo \
+    "--${BACKEND}.rpcuser=${BITCOIN_RPC_HOST}" \
     "--${BACKEND}.rpcuser=${BITCOIN_RPC_USER}" \
     "--${BACKEND}.rpcpass=${BITCOIN_RPC_PASSWORD}" \
     "--${BACKEND}.dir=/data/"
