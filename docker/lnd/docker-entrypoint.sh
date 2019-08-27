@@ -26,7 +26,7 @@ COMMON_PARAMS=$(echo \
 
 if echo ${BACKEND}|grep -q 'bitcoind\|btcd\|litecoind\|ltcd'; then
     BITCOIN_PARAMS=$(echo \
-    "--${BACKEND}.rpcuser=${BITCOIN_RPC_HOST}" \
+    "--${BACKEND}.rpchost=${BITCOIN_RPC_HOST}" \
     "--${BACKEND}.rpcuser=${BITCOIN_RPC_USER}" \
     "--${BACKEND}.rpcpass=${BITCOIN_RPC_PASSWORD}" \
     "--${BACKEND}.dir=/data/"
