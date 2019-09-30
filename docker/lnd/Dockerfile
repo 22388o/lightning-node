@@ -1,4 +1,4 @@
-FROM golang:1.11-alpine as builder
+FROM golang:1.13-alpine as builder
 
 ARG LND_VERSION=v0.5.2-beta
 
