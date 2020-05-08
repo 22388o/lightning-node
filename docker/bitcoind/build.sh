@@ -1,9 +1,8 @@
 #!/bin/sh
 
-BTC_VERSION=$(grep 'ARG BITCOIN_VERSION' Dockerfile | cut -d= -f2)
+VERSION="$1"
 
-docker build -t jr0sco/bitcoind .
-docker build -t jr0sco/bitcoind:${BTC_VERSION} .
+docker build --build-arg BITCOIN_VERSION=${VERSION} -t bitcoind .
 
-docker push jr0sco/bitcoind
-docker push jr0sco/bitcoind:${BTC_VERSION}
+docker tag bitcoind jr0sco/bitcoind:${VERSION}
+docker push jr0sco/bitcoind:${VERSION}
