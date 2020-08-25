@@ -1,6 +1,7 @@
 FROM golang:1.10-alpine as builder
+LABEL MAINTAINER Joel Cumberland <j12d@jros.co>
 
-# ARG VERSION=0.12.0-beta
+ARG BTC_VERSION=0.20.1
 
 # install build dependencies such as git and glide.
 RUN apk add --no-cache \
@@ -13,6 +14,7 @@ RUN go get -u -v github.com/btcsuite/btcd/...
 FROM alpine as final
 
 ARG USER_ID=1000
+ARG GROUP_ID=1000
 
 # expose mainnet ports (server, rpc)
 EXPOSE 8333 8334
@@ -34,9 +36,10 @@ COPY --from=builder /go/bin/findcheckpoint /bin/
 COPY --from=builder /go/bin/gencerts /bin/
 
 COPY "docker-entrypoint.sh" .
+RUN chmod +x "/docker-entrypoint.sh"
 
 # create user and data directory
-RUN addgroup -g ${USER_ID} bitcoin \
+RUN addgroup -g ${GROUP_ID} bitcoin \
   && adduser -u ${USER_ID} -D -G bitcoin -h /data -s /bin/sh bitcoin
   
 RUN apk add --no-cache \
@@ -58,4 +61,4 @@ RUN apk add --no-cache \
 VOLUME ["/data/.btcd"]
 
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
-CMD ["--datadir=/data/.btcd"]
+CMD ["btcd", "--datadir=/data/.btcd"]
