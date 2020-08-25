@@ -16,7 +16,7 @@ See [Dockerfile](./docker/bitcoind/Dockerfile)
 
 |Key|Default Values|Info|
 |---|---|---|
-|BITCOIN_VERSION|0.17.0.1|Bitcoin version to use|
+|BITCOIN_VERSION|0.20.1|Bitcoin version to use|
 |USER_ID|1000|bitcoin user UID. Make this the same as the local directory UID permissions |
 |GROUP_ID|1000|bitcoin group GID. Make this the same as the local directory UID permissions |
 
@@ -71,16 +71,24 @@ docker run --name bitcoind -d \
     bitcoind
 ```
 
-Lightning (lnd) Container
+## Lightning (lnd) Container
+
+<!-- [![Build Status](https://travis-ci.org/jrosco/lightning-node.svg?branch=master)](https://travis-ci.org/jr0sco/lightning-node/)
+[![ImageLayers](https://images.microbadger.com/badges/image/jr0sco/bitcoind.svg)](https://microbadger.com/#/images/jr0sco/bitcoind) -->
+[![Lightning Docker Stars](https://img.shields.io/docker/stars/jr0sco/lnd.svg)](https://hub.docker.com/r/jr0sco/lnd/)
+[![Lightning Docker Pulls](https://img.shields.io/docker/pulls/jr0sco/lnd.svg)](https://hub.docker.com/r/jr0sco/lnd/)
+
 ---
 See [Dockerfile](./docker/lnd/Dockerfile)
-### Dockerfile Argument Values
+
+### Lightning Dockerfile Argument Values
+
 |Key|Default Values|Info|
 |---|---|---|
-|LND_VERSION|v0.5.2-beta|Lightning version to use|
+|LND_VERSION|v0.10.4-beta|Lightning version to use|
 |USER_ID|1000|The run container as bitcoin UID. Make this the same as the local directory UID permissions|
 
-### Container Environment Values
+### Lightning Container Environment Values
 
 |Key|Default Values|Info|
 |---|---|---|
@@ -94,29 +102,36 @@ See [Dockerfile](./docker/lnd/Dockerfile)
 |ZMQ_PUB_RAW_BLK|tcp://127.0.0.1:28333|The ZeroMQ raw publisher blocks URL|
 |LIGHTNING_DATA|/data/.lnd|The Lightning .lnd directory location|
 
-### Docker Build
+### Lightning Docker Build
+
 ---
 
 ```bash
-docker build -t lnd .
+docker build -t lnd docker/lnd
 ```
+
 Build with differnet Lightning version
+
 ```bash
-docker build --build-arg LND_VERSION=v0.5-beta -t lnd .
+docker build --build-arg LND_VERSION=v0.10.4-beta -t lnd docker/lnd
 ```
+
 Build with different UID
+
 ```bash
-docker build --build-arg USER_ID=1001 -t lnd .
+docker build --build-arg USER_ID=1001 -t lnd docker/lnd
 ```
+
 ---
 Run Lightning with Bitcoin Backend
 
 ```bash
 docker run --rm --name lnd --network container:bitcoind -d \
-    -v {local.bitcoin.dir}:/data \
+    -v {local.bitcoin.dir}:/home/bitcoin \
     -v :/data/.lnd \
     lnd
 ```
+
 Run Lightning with Neutrino Backend
 
 ```bash
