@@ -17,11 +17,10 @@
 |DEBUG|info|Logging level|
 |NETWORK|mainnet|Which network to use (testnet,simnet,mainnet)|
 |CHAIN|bitcoin|Which blockchain to use (bitcoin,litecoin)|
-|BACKEND|bitcoind|Which backend to use (bitcoind,btcd,litecoind,ltcd,neutrino )|
+|BACKEND|bitcoind|Which backend to use (bitcoind,btcd,litecoind,ltcd,neutrino)|
 |ZMQ_PUB_RAW_TX|tcp://127.0.0.1:28332|The ZeroMQ raw publisher transactions URL|
 |ZMQ_PUB_RAW_BLK|tcp://127.0.0.1:28333|The ZeroMQ raw publisher blocks URL|
 |ZMQ_PUB_HASH_BLK|tcp://127.0.0.1:28334|The ZeroMQ hash publisher blocks URL|
-|LIGHTNING_DATA|/data/.lnd|The Lightning .lnd directory location|
 
 ## Lightning Docker Build
 
@@ -56,8 +55,10 @@ docker run --name lnd --network container:bitcoind -d \
 Example run Lightning with Neutrino Backend (testnet)
 
 ```bash
-docker run --name lnd -d \
+docker run --name lnd-neutrino -d \
     -e BACKEND=neutrino \
+    -p 9735:9735 \
+    -p 10009:10009 \
     -e NETWORK=testnet \
     -v {local.bitcoin.dir}:/home/bitcoin \
     lnd

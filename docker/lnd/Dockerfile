@@ -30,8 +30,9 @@ COPY --from=builder /go/bin/lnd /bin/
 RUN addgroup -g ${GROUP_ID} bitcoin \
   && adduser -u ${USER_ID} -D -G bitcoin -s /bin/sh bitcoin
 
-# Add bash.
+# Add bash and su-exec.
 RUN apk add --no-cache \
+  su-exec \
   bash
 
 # Copy the entrypoint script.
@@ -46,3 +47,4 @@ RUN chown bitcoin:bitcoin /home/bitcoin/.lnd/
 EXPOSE 9735 10009
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["lnd"]
