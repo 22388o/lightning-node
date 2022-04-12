@@ -11,7 +11,7 @@ cat <<-EOF > ${DATA_DIR}/bitcoin.conf
     rpcallowip=${BITCOIN_RPC_ALLOWED:-127.0.0.1}
     rpcpassword=${BITCOIN_RPC_PASSWORD:-password}
     rpcuser=${BITCOIN_RPC_USER:-bitcoin}
-    rpcport=${BITCOIN_RPC_PORT:-8332}
+    rpcport=${BITCOIN_RPC_PORT:-18332}
     server=${BITCOIN_SERVER:-1}
     listen=${LISTEN:-1}
     testnet=${BITCOIN_TESTNET:-1}

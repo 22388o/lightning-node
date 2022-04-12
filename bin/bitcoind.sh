@@ -10,7 +10,7 @@ function start() {
     docker run --rm --name ${BTCNAME} -d \
         --env-file ${MNTVOL}/${BTCNAME}/.env \
         -v ${MNTVOL}/${BTCNAME}:/data/ \
-        -p 0.0.0.0:9735:9735 \
+        -p 127.0.0.1:18332:18332 \
         -p 127.0.0.1:28332:28332 \
         -p 127.0.0.1:28333:28333 \
         ${BTCIMAGE}

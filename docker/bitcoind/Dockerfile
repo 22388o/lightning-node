@@ -30,10 +30,10 @@ RUN set -ex \
 ADD docker-entrypoint.sh /
 
 # mainnet and testnet ports (rpc, http)
-EXPOSE 8332 8333
+EXPOSE 8332 8333 18332 18333
 
 # mainnet and testnet zmq interfaces (block, tx)
-EXPOSE 18332 18333 28332 28333
+EXPOSE 28332 28333
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["bitcoind", "-datadir=/data"]

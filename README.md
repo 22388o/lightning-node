@@ -18,7 +18,7 @@ See [Dockerfile](./docker/bitcoind/Dockerfile)
 |BITCOIN_RPC_ALLOWED|127.0.0.1|RPC Whitelist IPs addresses|
 |BITCOIN_RPC_USER|bitcoin|The Bitcoin RPC user|
 |BITCOIN_RPC_PASSWORD|password |The Bitcoin RPC password|
-|BITCOIN_RPC_PORT|8332|Bitcoin RPC Port |
+|BITCOIN_RPC_PORT|18332|Bitcoin RPC Port |
 |BITCOIN_SERVER|1|Enable/Disable Bitcoin server|
 |LISTEN|1|Enable/Disable bitcoin to listen|
 |BITCOIN_TESTNET|1|Enable/Disable testnet|
@@ -44,7 +44,7 @@ Run bitcoind
 ```bash
 docker run --name bitcoind -d \
     -v {local.bitcoin.dir}:/data \
-    -p 0.0.0.0:9735:9735 \
+    -p 127.0.0.1:18332:18332 \
     -p 127.0.0.1:28332:28332 \
     -p 127.0.0.1:28333:28333 \
     bitcoind
